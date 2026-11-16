@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Salmon accent from the original design, tuned for WCAG AA contrast:
+ * deep salmon behind white text, the original #F1948A for accent text in dark mode.
+ */
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-accent: #c2453c;
+  --color-accent-hover: #d4574a;
+  --color-ink: #000112;
+  --color-line: #e4ebfa;
+  --color-line-dark: #3e3f4e;
+  --color-page: #f4f7fd;
+  --color-page-dark: #20212c;
+  --color-surface-dark: #2b2c37;
+  --color-danger: #d93a3a;
+  --color-danger-hover: #ea5555;
+}
+
+@theme inline {
+  --color-accent-text: var(--accent-text);
+  --color-muted: var(--muted);
+}
+
+:root {
+  --accent-text: #c2453c;
+  --muted: #647186;
+}
+
+.dark {
+  --accent-text: #f1948a;
+  --muted: #9aa5b8;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-page font-sans text-ink antialiased dark:bg-page-dark dark:text-white;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-text;
+  }
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-accent text-white hover:bg-accent-hover;
+}
+@utility btn-secondary {
+  @apply btn bg-accent/10 text-accent hover:bg-accent/20 dark:bg-white dark:hover:bg-white/90;
+}
+@utility btn-danger {
+  @apply btn bg-danger text-white hover:bg-danger-hover;
+}
+@utility field-label {
+  @apply mb-2 block text-xs font-bold text-muted dark:text-white;
+}
+@utility input {
+  @apply w-full rounded border border-muted/25 bg-transparent px-4 py-2 text-[13px] text-ink placeholder:text-ink/40 focus:border-accent-text focus:outline-none dark:text-white dark:placeholder:text-white/40;
+}
+@utility input-error {
+  @apply border-danger focus:border-danger;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
